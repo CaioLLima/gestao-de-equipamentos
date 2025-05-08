@@ -7,15 +7,13 @@ namespace GestaoEquipamentos
     {
         public Equipamento[] equipamentos;
         public int contador = 0;
-        // public RepositorioEquipamentos repositorioEquipamento = new RepositorioEquipamentos();
+        
         public void RegistrarEquipamento()
         {
             Console.WriteLine($"\nRegistro de novo Equipamento");
             Equipamento novoEquipamento = new Equipamento();
 
-
-            Console.Write($"ID: ");
-            novoEquipamento.id = Convert.ToInt32(Console.ReadLine());
+            novoEquipamento.id = contador;
             Console.Write($"Nome: ");
             novoEquipamento.nome = Console.ReadLine();
             Console.Write($"Preço: ");
@@ -55,13 +53,17 @@ namespace GestaoEquipamentos
             );
             }
 
-            Console.Write($"\nInsira ENTER para sair.");
+            Console.Write($"\nInsira ENTER para continuar.");
             Console.ReadLine();
         }
-
-        public void EditarEquipamento(int idSelecionado)
+        public void EditarEquipamento()
         {
             Console.WriteLine($"\nEdição de Equipamento");
+
+            VisualizarEquipamento();
+
+            Console.Write("\nQual equipamento deseja editar? Insira o ID: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
             for (int i = 0; i < equipamentos.Length; i++)
             {
@@ -104,23 +106,38 @@ namespace GestaoEquipamentos
             Console.Write($"\nEdição concluída.");
             Console.ReadLine();
         }
-
-        public void ExcluirEquipamento(int id)
+        public void ExcluirEquipamento()
         {
-            Equipamento equipamentoAtual = equipamentos[0];
-        }
+            Console.WriteLine($"\nExclusão de Equipamento");
 
+            VisualizarEquipamento();
+
+            Console.Write("Qual equipamento deseja Excluir? Insira o ID: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < equipamentos.Length; i++)
+            {
+                Equipamento editarEquipamento = equipamentos[i];
+
+                if (equipamentos[i] == null)
+                    continue;
+
+                if (editarEquipamento.id == idSelecionado)
+                {
+                    equipamentos[i] = null;
+                }
+                break;
+            }
+        }
     }
     public class Equipamento
     {
-        public int id = 12;
-        public string nome = "teste";
-        public double preco = 10.50;
-        public int numSerie = 1212;
-        public string data = "25/10/1999";
-        public string fabricante = "Neereu";
-
-
+        public int id;
+        public string nome;
+        public double preco;
+        public int numSerie;
+        public string data;
+        public string fabricante;
     }
     public class RepositorioEquipamentos
     {
@@ -128,7 +145,6 @@ namespace GestaoEquipamentos
     }
     public class TelaEquipamento
     {
-
         public char SelecionarOperacao()
         {
             Console.Clear();
@@ -140,7 +156,43 @@ namespace GestaoEquipamentos
             Console.WriteLine("4 - Excluir equipamento");
             Console.WriteLine("S - Sair");
 
-            return Console.ReadLine().ToUpper()[0];
+            char opcaoEscolhida = Console.ReadLine().ToUpper()[0];
+            return opcaoEscolhida;
+        }
+
+        public void MostrarOperacao(char opcaoEscolhida)
+        {
+            //ControleEquipamentos funcionario = new();
+            //funcionario.equipamentos = new Equipamento[100];
+
+            //TelaEquipamento telaEquipamento = new();
+
+            //while (true)
+            //{
+            //   // opcaoEscolhida = telaEquipamento.SelecionarOperacao();
+
+            //    if (opcaoEscolhida == 'S') break;
+
+            //    switch (opcaoEscolhida)
+            //    {
+            //        case '1':
+            //            funcionario.RegistrarEquipamento();
+            //            break;
+            //        case '2':
+            //            Console.Write("Qual equipamento deseja editar? Insira o ID: ");
+            //            funcionario.EditarEquipamento(Convert.ToInt32(Console.ReadLine()));
+            //            break;
+            //        case '3':
+            //            Console.Write("Lista de Equipamentos Cadastrados.");
+            //            funcionario.VisualizarEquipamento();
+            //            break;
+            //        case '4':
+            //            Console.Write("Qual equipamento deseja excluir? Insira o ID: ");
+            //            funcionario.ExcluirEquipamento(Convert.ToInt32(Console.ReadLine()));
+            //            break;
+            //    }
+
+            //}
         }
     }
     internal class Program
@@ -164,24 +216,19 @@ namespace GestaoEquipamentos
                         funcionario.RegistrarEquipamento();
                         break;
                     case '2':
-                        Console.Write("Qual equipamento deseja editar? Insira o ID: ");
-                        funcionario.EditarEquipamento(Convert.ToInt32(Console.ReadLine()));
+                       
+                        funcionario.EditarEquipamento();
                         break;
                     case '3':
                         Console.Write("Lista de Equipamentos Cadastrados.");
                         funcionario.VisualizarEquipamento();
                         break;
-                    case '4':
-                        Console.Write("Qual equipamento deseja excluir? Insira o ID: ");
-                        funcionario.ExcluirEquipamento(Convert.ToInt32(Console.ReadLine()));
+                    case '4':                       
+                        funcionario.ExcluirEquipamento();
                         break;
                 }
 
             }
-
-            TelaEquipamento opcao = new();
-            opcao.SelecionarOperacao();
-
 
             Console.ReadLine();
         }
