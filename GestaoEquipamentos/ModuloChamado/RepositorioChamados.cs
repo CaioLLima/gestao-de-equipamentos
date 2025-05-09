@@ -11,7 +11,7 @@ namespace GestaoEquipamentos.ModuloChamado
 
         public void RegistrarChamado()
         {
-            Console.WriteLine($"\nRegistro de novo Equipamento");
+            Console.WriteLine($"\nRegistro de novo Chamado");
             Chamado novoChamado = new Chamado();
 
             novoChamado.id = contador;

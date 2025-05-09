@@ -2,6 +2,7 @@
 using System.Security.Cryptography.X509Certificates;
 using GestaoEquipamentos.ModuloChamado;
 using GestaoEquipamentos.ModuloEquipamento;
+using GestaoEquipamentos.ModuloFabricante;
 
 namespace GestaoEquipamentos;
 
@@ -9,16 +10,21 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        RepositorioEquipamentos funcionario = new();
+        RepositorioEquipamentos repositorioEquipamento = new();
         TelaEquipamento telaEquipamento = new();
         TelaChamado telaChamado = new();
-
-        RepositorioChamados funcionarioChamado = new()
+        TelaFabricante telaFabricante = new();
+        RepositorioChamados repositorioChamado = new()
         {
-            repositorioEquipamento = funcionario,
-            equipamentos = funcionario.equipamentos
+            repositorioEquipamento = repositorioEquipamento,
+            equipamentos = repositorioEquipamento.equipamentos
         };
 
+        RepositorioFabricante repositorioFabricante = new()
+        {
+            repositorioEquipamento = repositorioEquipamento,
+            equipamentos = repositorioEquipamento.equipamentos
+        };
         
         while (true)
         {
@@ -35,16 +41,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        funcionario.RegistrarEquipamento();
+                        repositorioEquipamento.RegistrarEquipamento();
                         break;
                     case '2':
-                        funcionario.EditarEquipamento();
+                        repositorioEquipamento.EditarEquipamento();
                         break;
                     case '3':
-                        funcionario.VisualizarEquipamento();
+                        repositorioEquipamento.VisualizarEquipamento();
                         break;
                     case '4':
-                        funcionario.ExcluirEquipamento();
+                        repositorioEquipamento.ExcluirEquipamento();
                         break;
                 }
             }
@@ -58,16 +64,38 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        funcionarioChamado.RegistrarChamado();
+                        repositorioChamado.RegistrarChamado();
                         break;
                     case '2':
-                        funcionarioChamado.EditarChamado();
+                        repositorioChamado.EditarChamado();
                         break;
                     case '3':
-                        funcionarioChamado.VisualizarChamado();
+                        repositorioChamado.VisualizarChamado();
                         break;
                     case '4':
-                        funcionarioChamado.ExcluirChamado();
+                        repositorioChamado.ExcluirChamado();
+                        break;
+                }
+            }
+            else if (opcaoTelaPrincipal == '3')
+            {
+                char opcaoEscolhida = telaFabricante.SelecionarOperacao();
+
+                if (opcaoEscolhida == 'S') continue;
+
+                switch (opcaoEscolhida)
+                {
+                    case '1':
+                        repositorioFabricante.RegistrarFabricante();
+                        break;
+                    case '2':
+                        repositorioFabricante.EditarFabricante();
+                        break;
+                    case '3':
+                        repositorioFabricante.VisualizarFabricante();
+                        break;
+                    case '4':
+                        repositorioFabricante.ExcluirFabricante();
                         break;
                 }
             }
@@ -80,7 +108,7 @@ internal class Program
 
         Console.WriteLine("Gestão de Equipamentos");
         Console.WriteLine();
-        Console.WriteLine("Qual opção deseja escolher? \n 1 - Controle de Equipamentos \n 2 - Controle de Chamados \n S - Sair");
+        Console.WriteLine("Qual opção deseja escolher? \n 1 - Controle de Equipamentos \n 2 - Controle de Chamados \n 3 - Controle de Fabricantes \n S - Sair");
         Console.WriteLine();
 
         Console.Write("Escolha uma das opções: ");
