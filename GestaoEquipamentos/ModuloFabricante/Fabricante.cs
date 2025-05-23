@@ -4,14 +4,14 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using GestaoEquipamentos.Compartilhado;
 using GestaoEquipamentos.ModuloChamado;
 using GestaoEquipamentos.ModuloEquipamento;
 
 namespace GestaoEquipamentos.ModuloFabricante
 {
-    public class Fabricante
+    public class Fabricante : EntidadeBase
     {
-        public int id;
         public string nome;
         public string telefone;
         public string email;
@@ -22,7 +22,7 @@ namespace GestaoEquipamentos.ModuloFabricante
             this.telefone = telefone;
             this.email = email;
         }
-        public string Validar()
+        public override string Validar()
         {
             string erros = "";
 
@@ -44,8 +44,9 @@ namespace GestaoEquipamentos.ModuloFabricante
             return erros;
         }
 
-        public void AtualizarRegistro(Fabricante fabricanteAtualizado)
+        public override void AtualizarRegistro(EntidadeBase registroAtualizado)
         {
+            Fabricante fabricanteAtualizado = (Fabricante)registroAtualizado;
             this.nome = fabricanteAtualizado.nome;
             this.email = fabricanteAtualizado.email;
             this.telefone = fabricanteAtualizado.telefone;

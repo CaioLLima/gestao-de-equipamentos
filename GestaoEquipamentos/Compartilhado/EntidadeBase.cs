@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoEquipamentos.Compartilhado
 {
-    internal class EntidadeBase
+    public abstract class EntidadeBase
     {
         public int id;
 

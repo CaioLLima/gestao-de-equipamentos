@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GestaoEquipamentos.Compartilhado;
 using GestaoEquipamentos.ModuloFabricante;
 using GestaoFabricantes.ModuloFabricante;
 
@@ -52,7 +53,7 @@ namespace GestaoFabricantes.ModuloFabricante
 
                 return;
             }
-            repositorioFabricante.CadastrarFabricante(fabricante);
+            repositorioFabricante.CadastrarRegistro(fabricante);
         }
         public void VisualizarFabricante()
         {
@@ -62,10 +63,10 @@ namespace GestaoFabricantes.ModuloFabricante
                 "{0, -10} | {1, -25} | {2, -10} | {3, -10}",
                 "ID", "Nome", "Email", "Telefone"
             );
-            Fabricante[] fabricantes = repositorioFabricante.SelecionarFabricantes();
+            EntidadeBase[] fabricantes = repositorioFabricante.SelecionarRegistros();
             for (int i = 0; i < fabricantes.Length; i++)
             {
-                Fabricante e = fabricantes[i];
+                Fabricante e = (Fabricante)fabricantes[i];
 
                 if (e == null)
                     continue;
@@ -109,7 +110,7 @@ namespace GestaoFabricantes.ModuloFabricante
                     editarFabricante.telefone = Console.ReadLine();
                     break;
             }
-            repositorioFabricante.EditarFabricante(idSelecionado, editarFabricante);
+            repositorioFabricante.EditarRegistro(idSelecionado, editarFabricante);
 
             Console.Write($"\nEdição concluída.");
             Console.ReadLine();
@@ -123,7 +124,7 @@ namespace GestaoFabricantes.ModuloFabricante
             Console.Write("\nQual Fabricante deseja Excluir? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            repositorioFabricante.ExcluirFabricante(idSelecionado);
+            repositorioFabricante.ExcluirRegistro(idSelecionado);
 
             Console.WriteLine($"Fabricante excluído com sucesso.");
             Console.ReadLine();

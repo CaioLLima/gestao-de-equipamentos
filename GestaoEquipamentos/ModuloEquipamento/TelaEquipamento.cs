@@ -1,4 +1,6 @@
-﻿namespace GestaoEquipamentos.ModuloEquipamento
+﻿using GestaoEquipamentos.Compartilhado;
+
+namespace GestaoEquipamentos.ModuloEquipamento
 {
     public class TelaEquipamento
     {
@@ -22,7 +24,7 @@
             Console.WriteLine($"\nRegistro de novo Equipamento");
             Equipamento equipamento = ObterDados();
 
-            repositorioEquipamento.CadastrarEquipamento(equipamento);
+            repositorioEquipamento.CadastrarRegistro(equipamento);
 
         }
         public void VisualizarEquipamento()
@@ -33,11 +35,11 @@
                 "{0, -10} | {1, -25} | {2, -10} | {3, -10} | {4, -25} | {5, -20}",
                 "ID", "Nome", "Preço", "Número de série", "Fabricante", "Data"
             );
-            Equipamento[] equipamentos = repositorioEquipamento.SelecionarEquipamentos();
+            EntidadeBase[] equipamentos = repositorioEquipamento.SelecionarRegistros();
 
             for (int i = 0; i < equipamentos.Length; i++)
             {
-                Equipamento e = equipamentos[i];
+                Equipamento e = (Equipamento)equipamentos[i];
 
                 if (e == null)
                     continue;
@@ -62,7 +64,7 @@
 
             Equipamento equipamentoAtualizado = ObterDados();
 
-            bool conseguiuEditar = repositorioEquipamento.EditarEquipamentos(idSelecionado, equipamentoAtualizado);
+            bool conseguiuEditar = repositorioEquipamento.EditarRegistro(idSelecionado, equipamentoAtualizado);
 
             if (!conseguiuEditar)
             {
@@ -86,7 +88,7 @@
             Console.Write("\nQual equipamento deseja Excluir? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(idSelecionado);
+            bool conseguiuExcluir = repositorioEquipamento.ExcluirRegistro(idSelecionado);
 
             if (!conseguiuExcluir)
             {
