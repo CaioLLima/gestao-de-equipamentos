@@ -7,7 +7,7 @@ namespace GestaoEquipamentos.ModuloChamado
         public int id;
         public string titulo;
         public string data;
-        public Equipamento equipamentos;
+        public Equipamento equipamento;
         public string descricao;
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using GestaoChamados.ModuloChamado;
 using GestaoEquipamentos.ModuloChamado;
 using GestaoEquipamentos.ModuloEquipamento;
 using GestaoEquipamentos.ModuloFabricante;
+using GestaoFabricantes.ModuloFabricante;
 
 namespace GestaoEquipamentos;
 
@@ -10,21 +12,15 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        RepositorioEquipamentos repositorioEquipamento = new();
-        TelaEquipamento telaEquipamento = new();
-        TelaChamado telaChamado = new();
-        TelaFabricante telaFabricante = new();
-        RepositorioChamados repositorioChamado = new()
-        {
-            repositorioEquipamento = repositorioEquipamento,
-            equipamentos = repositorioEquipamento.equipamentos
-        };
+        RepositorioEquipamentos repositorioEquipamentos = new();
+        RepositorioChamados repositorioChamados = new();
+        RepositorioFabricante repositorioFabricante = new();
 
-        RepositorioFabricante repositorioFabricante = new()
-        {
-            repositorioEquipamento = repositorioEquipamento,
-            equipamentos = repositorioEquipamento.equipamentos
-        };
+        TelaEquipamento telaEquipamento = new();
+        telaEquipamento.repositorioEquipamento = repositorioEquipamentos;
+        TelaFabricante telaFabricante = new(repositorioFabricante);
+        TelaChamado telaChamado = new(repositorioEquipamentos, repositorioChamados);
+        
         
         while (true)
         {
@@ -41,16 +37,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        repositorioEquipamento.RegistrarEquipamento();
+                        telaEquipamento.RegistrarEquipamento();
                         break;
                     case '2':
-                        repositorioEquipamento.EditarEquipamento();
+                        telaEquipamento.EditarEquipamento();
                         break;
                     case '3':
-                        repositorioEquipamento.VisualizarEquipamento();
+                        telaEquipamento.VisualizarEquipamento();
                         break;
                     case '4':
-                        repositorioEquipamento.ExcluirEquipamento();
+                        telaEquipamento.ExcluirEquipamento();
                         break;
                 }
             }
@@ -64,16 +60,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        repositorioChamado.RegistrarChamado();
+                        telaChamado.RegistrarChamado();
                         break;
                     case '2':
-                        repositorioChamado.EditarChamado();
+                        telaChamado.EditarChamado();
                         break;
                     case '3':
-                        repositorioChamado.VisualizarChamado();
+                        telaChamado.VisualizarChamado();
                         break;
                     case '4':
-                        repositorioChamado.ExcluirChamado();
+                        telaChamado.ExcluirChamado();
                         break;
                 }
             }
@@ -86,16 +82,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        repositorioFabricante.RegistrarFabricante();
+                        telaFabricante.RegistrarFabricante();
                         break;
                     case '2':
-                        repositorioFabricante.EditarFabricante();
+                        telaFabricante.EditarFabricante();
                         break;
                     case '3':
-                        repositorioFabricante.VisualizarFabricante();
+                        telaFabricante.VisualizarFabricante();
                         break;
                     case '4':
-                        repositorioFabricante.ExcluirFabricante();
+                        telaFabricante.ExcluirFabricante();
                         break;
                 }
             }

@@ -3,51 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GestaoEquipamentos.Compartilhado;
 using GestaoEquipamentos.ModuloEquipamento;
+using GestaoEquipamentos.ModuloFabricante;
+using GestaoFabricantes.ModuloFabricante;
 
-namespace GestaoEquipamentos.ModuloFabricante
+namespace GestaoFabricantes.ModuloFabricante
 {
-    class RepositorioFabricante
+    public class RepositorioFabricante : RepositorioBase
     {
-        public Fabricante[] fabricantes = new Fabricante[100];
-        public int contador = 0;
-        public RepositorioEquipamentos repositorioEquipamento;
-        public Equipamento[] equipamentos;
-
-        public void RegistrarFabricante()
+        private Fabricante[] fabricantes = new Fabricante[100];
+        private int contador;
+       
+        public void CadastrarFabricante(Fabricante fabricante)
         {
-            Console.WriteLine($"\nRegistro de novo Fabricante");
-            Fabricante novoFabricante = new Fabricante();
-
-            novoFabricante.id = contador;
-            Console.Write($"Nome: ");
-            novoFabricante.nome = Console.ReadLine();
-            Console.Write($"Email: ");
-            novoFabricante.email = Console.ReadLine();
-            Console.Write($"Telefone: ");
-            novoFabricante.telefone = Console.ReadLine();
-
-            //VisualizarEquipamento();
-
-            //Console.Write("Digite o ID do equipamento que deseja selecionar: ");
-            //int idEquipamento = Convert.ToInt32(Console.ReadLine());
-
-            //novoFabricante.equipamentos = repositorioEquipamento.SelecionarEquipamentoPorId(idEquipamento);
-            Console.Write($"\nRegistro concluído.");
-            Console.ReadLine();
-            fabricantes[contador] = novoFabricante;
+            fabricante.id = contador;
+            fabricantes[contador] = fabricante;
             contador++;
-
         }
-        public void VisualizarFabricante()
+        public bool EditarFabricante(int idSelecionado, Fabricante fabricanteAtualizado)
         {
-            Console.WriteLine($"\nVisualização de Fabricante");
+            Fabricante fabricante = SelecionarFabricantePorId(idSelecionado);
 
-            Console.WriteLine(
-                "{0, -10} | {1, -25} | {2, -10} | {3, -10}",
-                "ID", "Nome", "Email", "Telefone"
-            );
+            if (fabricante == null)
+                return false;
 
+            fabricante.AtualizarRegistro(fabricanteAtualizado);
+            
+            return true;
+        }
+        public bool ExcluirFabricante(int idSelecionado)
+        {
+            for (int i = 0; i < fabricantes.Length; i++)
+            {
+                if (fabricantes[i] == null)
+                    continue;
+
+                if (fabricantes[i].id == idSelecionado)
+                {
+                    fabricantes[i] = null;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public Fabricante[] SelecionarFabricantes()
+        {
+            return fabricantes;
+        }
+        public Fabricante SelecionarFabricantePorId(int idSelecionado)
+        {
             for (int i = 0; i < fabricantes.Length; i++)
             {
                 Fabricante e = fabricantes[i];
@@ -55,105 +62,11 @@ namespace GestaoEquipamentos.ModuloFabricante
                 if (e == null)
                     continue;
 
-                Console.WriteLine(
-                "{0, -10} | {1, -25} | {2, -10} | {3, -10}",
-                e.id, e.nome, e.email, e.telefone
-            );
+                if (e.id == idSelecionado)
+                    return e;
             }
 
-            Console.Write($"\nInsira ENTER para continuar.");
-            Console.ReadLine();
-        }
-        public void EditarFabricante()
-        {
-            Console.WriteLine($"\nEdição de Fabricante");
-
-            VisualizarFabricante();
-
-            Console.Write("\nQual Fabricante deseja editar? Insira o ID: ");
-            int idSelecionado = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < fabricantes.Length; i++)
-            {
-                Fabricante editarFabricante = fabricantes[i];
-
-                if (editarFabricante.id == idSelecionado)
-                {
-                    Console.WriteLine("Qual deseja editar? \n 1 - Nome \n 2 - Email \n 3 - Telefone \n S - Sair");
-                    char opcaoEscolhida = Convert.ToChar(Console.ReadLine());
-
-                    if (opcaoEscolhida == 'S') break;
-                    switch (opcaoEscolhida)
-                    {
-                        case '1':
-                            Console.Write("Insira o novo nome: ");
-                            editarFabricante.nome = Console.ReadLine();
-                            break;
-                        case '2':
-                            Console.Write("Insira a novo email: ");
-                            editarFabricante.email = Console.ReadLine();
-                            break;
-                        case '3':
-                            Console.Write("Insira a nova telefone: ");
-                            editarFabricante.telefone = Console.ReadLine();
-                            break;
-                    }
-                }
-                break;
-            }
-
-            Console.Write($"\nEdição concluída.");
-            Console.ReadLine();
-        }
-        public void ExcluirFabricante()
-        {
-            Console.WriteLine($"\nExclusão de Fabricante");
-
-            VisualizarFabricante();
-
-            Console.Write("Qual Fabricante deseja Excluir? Insira o ID: ");
-            int idSelecionado = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < fabricantes.Length; i++)
-            {
-                Fabricante editarFabricante = fabricantes[i];
-
-                if (fabricantes[i] == null)
-                    continue;
-
-                if (editarFabricante.id == idSelecionado)
-                {
-                    fabricantes[i] = null;
-                }
-                break;
-            }
-        }
-        public void VisualizarEquipamento()
-        {
-            Console.WriteLine($"\nVisualização de Equipamento");
-
-            Console.WriteLine(
-                "{0, -10} | {1, -25} | {2, -10} | {3, -10} | {4, -25} | {5, -20}",
-                "ID", "Nome", "Preço", "Número de série", "Fabricante", "Data"
-            );
-
-
-
-            for (int i = 0; i < equipamentos.Length; i++)
-            {
-                Equipamento e = equipamentos[i];
-
-                if (e == null)
-                    continue;
-
-                Console.WriteLine(
-                "{0, -10} | {1, -25} | {2, -10} | {3, -10} | {4, -25} | {5, -20}",
-                e.id, e.nome, e.preco.ToString("C2"), e.numSerie, e.fabricante, e.data
-            );
-            }
-
-            Console.Write($"\nInsira ENTER para continuar.");
-            Console.ReadLine();
+            return null;
         }
     }
 }
