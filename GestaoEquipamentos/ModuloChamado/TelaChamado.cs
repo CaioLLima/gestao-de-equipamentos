@@ -5,30 +5,18 @@ using GestaoEquipamentos.ModuloEquipamento;
 
 namespace GestaoChamados.ModuloChamado
 {
-    public class TelaChamado
+    public class TelaChamado : TelaBase
     {
         public RepositorioEquipamentos repositorioEquipamentos;
         public RepositorioChamados repositorioChamados;
-        public TelaChamado(RepositorioEquipamentos repoEquipamentos, RepositorioChamados repoChamados)
+        public TelaChamado(RepositorioEquipamentos repoEquipamentos, RepositorioChamados repoChamados) 
+            : base("Chamados", repoChamados)
         {
             repositorioEquipamentos = repoEquipamentos;
             repositorioChamados = repoChamados;
         }
-        public char SelecionarOperacao()
-        {
-            Console.Clear();
-            Console.WriteLine("Controle de Chamados");
-            Console.WriteLine("O que deseja realizar?");
-            Console.WriteLine("1 - Registrar chamados");
-            Console.WriteLine("2 - Editar chamados");
-            Console.WriteLine("3 - Visualizar chamados");
-            Console.WriteLine("4 - Excluir chamados");
-            Console.WriteLine("S - Sair");
-
-            char opcaoEscolhida = Console.ReadLine().ToUpper()[0];
-            return opcaoEscolhida;
-        }
-        public void RegistrarChamado()
+        
+        public void RegistrarRegistro()
         {
             Console.WriteLine($"\nRegistro de novo Chamado");
             Chamado chamado = ObterDados();
@@ -36,7 +24,7 @@ namespace GestaoChamados.ModuloChamado
             repositorioChamados.CadastrarRegistro(chamado);
 
         }
-        public void VisualizarChamado()
+        public override void VisualizarRegistros()
         {
             Console.WriteLine($"\nVisualização de Chamado");
 
@@ -66,7 +54,7 @@ namespace GestaoChamados.ModuloChamado
         {
             Console.WriteLine($"\nEdição de Chamado");
 
-            VisualizarChamado();
+            VisualizarRegistros();
 
             Console.Write("\nQual chamado deseja editar? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -87,11 +75,11 @@ namespace GestaoChamados.ModuloChamado
             Console.WriteLine($"\nChamado \"{chamadoAtualizado.titulo}\" editado com sucesso!");
             Console.ReadLine();
         }
-        public void ExcluirChamado()
+        public void ExcluirRegistro()
         {
             Console.WriteLine($"\nExclusão de Chamado");
 
-            VisualizarChamado();
+            VisualizarRegistros();
 
             Console.Write("\nQual chamado deseja Excluir? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -108,7 +96,7 @@ namespace GestaoChamados.ModuloChamado
             Console.WriteLine($"\nChamado excluído com sucesso!");
             Console.ReadLine();
         }
-        public Chamado ObterDados()
+        protected override Chamado ObterDados()
         {
             Console.Write($"Titulo: ");
             string titulo = Console.ReadLine();

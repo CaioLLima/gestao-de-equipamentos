@@ -1,25 +1,18 @@
 ﻿using GestaoEquipamentos.Compartilhado;
+using GestaoFabricantes.ModuloFabricante;
 
 namespace GestaoEquipamentos.ModuloEquipamento
 {
-    public class TelaEquipamento
+    public class TelaEquipamento : TelaBase
     {
         public RepositorioEquipamentos repositorioEquipamento = new();
-        public char SelecionarOperacao()
-        {
-            Console.Clear();
-            Console.WriteLine("Controle de Equipamentos");
-            Console.WriteLine("O que deseja realizar?");
-            Console.WriteLine("1 - Registrar equipamento");
-            Console.WriteLine("2 - Editar equipamento");
-            Console.WriteLine("3 - Visualizar equipamento");
-            Console.WriteLine("4 - Excluir equipamento");
-            Console.WriteLine("S - Sair");
 
-            char opcaoEscolhida = Console.ReadLine().ToUpper()[0];
-            return opcaoEscolhida;
+        public TelaEquipamento(RepositorioEquipamentos repositorioF) : base("Equipamento", repositorioF)
+        {
+            repositorioEquipamento = repositorioF;
         }
-        public void RegistrarEquipamento()
+        
+        public void RegistrarRegistro()
         {
             Console.WriteLine($"\nRegistro de novo Equipamento");
             Equipamento equipamento = ObterDados();
@@ -27,7 +20,7 @@ namespace GestaoEquipamentos.ModuloEquipamento
             repositorioEquipamento.CadastrarRegistro(equipamento);
 
         }
-        public void VisualizarEquipamento()
+        public override void VisualizarRegistros()
         {
             Console.WriteLine($"\nVisualização de Equipamento");
 
@@ -53,11 +46,11 @@ namespace GestaoEquipamentos.ModuloEquipamento
             Console.Write($"\nInsira ENTER para continuar.");
             Console.ReadLine();
         }
-        public void EditarEquipamento()
+        public void EditarRegistros()
         {
             Console.WriteLine($"\nEdição de Equipamento");
 
-            VisualizarEquipamento();
+            VisualizarRegistros();
 
             Console.Write("\nQual equipamento deseja editar? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -79,11 +72,11 @@ namespace GestaoEquipamentos.ModuloEquipamento
 
             
         }
-        public void ExcluirEquipamento()
+        public void ExcluirRegistros()
         {
             Console.WriteLine($"\nExclusão de Equipamento");
 
-            VisualizarEquipamento();
+            VisualizarRegistros();
 
             Console.Write("\nQual equipamento deseja Excluir? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -101,7 +94,7 @@ namespace GestaoEquipamentos.ModuloEquipamento
             Console.WriteLine($"\nEquipamento excluído com sucesso!");
             Console.ReadLine();
         }  
-        public Equipamento ObterDados()
+        protected override Equipamento ObterDados()
         {
             Equipamento equipamento = new Equipamento();
 

@@ -12,16 +12,20 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        RepositorioEquipamentos repositorioEquipamentos = new();
-        RepositorioChamados repositorioChamados = new();
-        RepositorioFabricante repositorioFabricante = new();
+        RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
+        RepositorioEquipamentos repositorioEquipamento = new RepositorioEquipamentos();
+        RepositorioChamados repositorioChamado = new RepositorioChamados();
 
-        TelaEquipamento telaEquipamento = new();
-        telaEquipamento.repositorioEquipamento = repositorioEquipamentos;
-        TelaFabricante telaFabricante = new(repositorioFabricante);
-        TelaChamado telaChamado = new(repositorioEquipamentos, repositorioChamados);
-        
-        
+        TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante);
+
+        TelaEquipamento telaEquipamento = new TelaEquipamento(
+            repositorioEquipamento
+        );
+
+        TelaChamado telaChamado = new TelaChamado(repositorioEquipamento,repositorioChamado);
+
+
+
         while (true)
         {
             char opcaoTelaPrincipal = ApresentarTelaPrincipal();
@@ -37,16 +41,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        telaEquipamento.RegistrarEquipamento();
+                        telaEquipamento.RegistrarRegistro();
                         break;
                     case '2':
-                        telaEquipamento.EditarEquipamento();
+                        telaEquipamento.EditarRegistro();
                         break;
                     case '3':
-                        telaEquipamento.VisualizarEquipamento();
+                        telaEquipamento.VisualizarRegistros();
                         break;
                     case '4':
-                        telaEquipamento.ExcluirEquipamento();
+                        telaEquipamento.ExcluirRegistro();
                         break;
                 }
             }
@@ -60,16 +64,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        telaChamado.RegistrarChamado();
+                        telaChamado.RegistrarRegistro();
                         break;
                     case '2':
-                        telaChamado.EditarChamado();
+                        telaChamado.EditarRegistro();
                         break;
                     case '3':
-                        telaChamado.VisualizarChamado();
+                        telaChamado.VisualizarRegistros();
                         break;
                     case '4':
-                        telaChamado.ExcluirChamado();
+                        telaChamado.ExcluirRegistro();
                         break;
                 }
             }
@@ -82,16 +86,16 @@ internal class Program
                 switch (opcaoEscolhida)
                 {
                     case '1':
-                        telaFabricante.RegistrarFabricante();
+                        telaFabricante.RegistrarRegistro();
                         break;
                     case '2':
-                        telaFabricante.EditarFabricante();
+                        telaFabricante.EditarRegistro();
                         break;
                     case '3':
-                        telaFabricante.VisualizarFabricante();
+                        telaFabricante.VisualizarRegistros();
                         break;
                     case '4':
-                        telaFabricante.ExcluirFabricante();
+                        telaFabricante.ExcluirRegistro();
                         break;
                 }
             }

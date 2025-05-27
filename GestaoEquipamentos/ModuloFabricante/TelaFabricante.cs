@@ -9,11 +9,11 @@ using GestaoFabricantes.ModuloFabricante;
 
 namespace GestaoFabricantes.ModuloFabricante
 {
-    public class TelaFabricante
+    public class TelaFabricante : TelaBase
     {
         private RepositorioFabricante repositorioFabricante = new();
 
-        public TelaFabricante(RepositorioFabricante repositorioF)
+        public TelaFabricante(RepositorioFabricante repositorioF) : base("Fabricante", repositorioF)
         {
             repositorioFabricante = repositorioF;
         }
@@ -31,7 +31,7 @@ namespace GestaoFabricantes.ModuloFabricante
             char opcaoEscolhida = Console.ReadLine().ToUpper()[0];
             return opcaoEscolhida;
         }
-        public void RegistrarFabricante()
+        public void RegistrarRegistro()
         {
             Console.WriteLine($"\nRegistro de novo Fabricante");
             Fabricante fabricante = ObterDados();
@@ -49,13 +49,13 @@ namespace GestaoFabricantes.ModuloFabricante
                 Console.Write("\nDigite ENTER para continuar...");
                 Console.ReadLine();
 
-                RegistrarFabricante();
+                RegistrarRegistro();
 
                 return;
             }
             repositorioFabricante.CadastrarRegistro(fabricante);
         }
-        public void VisualizarFabricante()
+        public override void VisualizarRegistros()
         {
             Console.WriteLine($"\nVisualização de Fabricante");
 
@@ -80,11 +80,11 @@ namespace GestaoFabricantes.ModuloFabricante
             Console.Write($"\nInsira ENTER para continuar.");
             Console.ReadLine();
         }
-        public void EditarFabricante()
+        public void EditarRegistro()
         {
             Console.WriteLine($"\nEdição de Fabricante");
 
-            VisualizarFabricante();
+            VisualizarRegistros();
 
             Console.Write("\nQual Fabricante deseja editar? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -115,11 +115,11 @@ namespace GestaoFabricantes.ModuloFabricante
             Console.Write($"\nEdição concluída.");
             Console.ReadLine();
         }
-        public void ExcluirFabricante()
+        public void ExcluirRegistro()
         {
             Console.WriteLine($"\nExclusão de Fabricante");
 
-            VisualizarFabricante();
+            VisualizarRegistros();
 
             Console.Write("\nQual Fabricante deseja Excluir? Insira o ID: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -129,12 +129,12 @@ namespace GestaoFabricantes.ModuloFabricante
             Console.WriteLine($"Fabricante excluído com sucesso.");
             Console.ReadLine();
         }
-        private Fabricante ObterDados()
+        protected override Fabricante ObterDados()
         {
             Console.Write($"Nome: ");
             string nome = Console.ReadLine();
             Console.Write($"Telefone: ");
-            string telefone = Console.ReadLine(); 
+            string telefone = Console.ReadLine();
             Console.Write($"Email: ");
             string email = Console.ReadLine();
 
@@ -145,5 +145,6 @@ namespace GestaoFabricantes.ModuloFabricante
             return fabricante;
 
         }
+        
     }
 }
